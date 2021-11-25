@@ -33,7 +33,7 @@ class TemplatesController < ApplicationController
   
       respond_to do |format|
         if @template.save
-          format.html { redirect_to @template, notice: 'Template was successfully created.' }
+          format.html { redirect_to @template, notice: "The #{t('templates.template')}  was successfully created." }
         else
           format.html { render action: 'new' }
         end
@@ -49,7 +49,7 @@ class TemplatesController < ApplicationController
       @template.resolve_inconsistencies
       respond_to do |format|
         if @template.save
-          format.html { redirect_to @template, notice: 'Template was successfully updated.' }
+          format.html { redirect_to @template, notice: "The #{t('templates.template')}  was successfully updated." }
           format.json {render json: @template, include: [params[:include]]}
         else
           format.html { render action: 'edit', status: :unprocessable_entity }
@@ -61,9 +61,9 @@ class TemplatesController < ApplicationController
     def destroy
       respond_to do |format|
       if @template.can_delete? && @template.destroy
-        format.html { redirect_to @template,location: templates_path, notice: 'Template was successfully deleted.' }
+        format.html { redirect_to @template,location: templates_path, notice: "The #{t('templates.template')} was successfully deleted." }
       else
-        format.html { redirect_to @template, location: templates_path, notice: 'It was not possible to delete the template.' }
+        format.html { redirect_to @template, location: templates_path, notice: "It was not possible to delete the #{t('templates.template')}." }
       end
       end
     end

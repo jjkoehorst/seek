@@ -9,7 +9,7 @@ class TemplateTest < ActiveSupport::TestCase
   end
 
   test 'validation' do
-    template = Template.new(title: 'Test', project_ids: @project_ids, policy: Factory(:private_policy))
+    template = Template.new(title: "Test #{I18n.t('templates.template')}", project_ids: @project_ids, policy: Factory(:private_policy))
     assert template.valid?
     template.title = ''
     assert !template.valid?
@@ -17,7 +17,7 @@ class TemplateTest < ActiveSupport::TestCase
     assert !template.valid?
 
     # do not allow empty projects
-    template.title = 'Test'
+    template.title = "Test #{I18n.t('templates.template')}"
     template.projects = []
     refute template.valid?
 

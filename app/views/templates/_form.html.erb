@@ -2,6 +2,8 @@
 <%= stylesheet_link_tag "select2.min.css" %>
 <%= stylesheet_link_tag "select2.bootstrap.min.css" %>
 <% tab ||= 'manual' %>
+<% i18n_template =I18n.t('templates.template') %>
+<% i18n_templates =I18n.t('templates.template').pluralize %>
 
 <span id='modal-dialogues'>
     <%= sample_controlled_vocab_model_dialog('cv-modal') %>
@@ -11,14 +13,14 @@
     <%= f.error_messages %>
 
     <% if @template.new_record? %>
-        <%= folding_panel('Create template using existing template', false, {help_text: "Create template based on existing templates", :body_options => {:id => 'add_custom_attribute_panel'}}) do %>
-            <input type="button" value="Choose from existing templates" class="btn btn-primary" onClick="showTemplateModal()">
+        <%= folding_panel("Create #{i18n_template} using existing #{i18n_templates}", false, {help_text: "Create #{i18n_template} based on existing #{i18n_templates}", :body_options => {:id => 'add_custom_attribute_panel'}}) do %>
+            <input type="button" value="Choose from existing <% i18n_templates %>" class="btn btn-primary" onClick="showTemplateModal()">
         <% end %>
     <% end %>
 
     <div class="form-group">
         <label>Title</label><%= required_span %>
-        <%= f.text_field :title, :class => 'form-control', :placeholder => 'Template name' %>
+        <%= f.text_field :title, :class => 'form-control', :placeholder => "#{i18n_templates} name" %>
     </div>
 
     <div class="form-group">
@@ -36,9 +38,9 @@
         <div role="tabpanel" class="tab-pane<%= ' active'.html_safe if tab == 'manual' -%>" id="manual">
             
             <%= modal(id: 'existing_templates', size: 'xl') do %>
-                <%= modal_header('Create template using existing template') %>
+                <%= modal_header("Create #{i18n_template} using existing #{i18n_templates}") %>
                 <%= modal_body do %>
-                    <%= folding_panel('Filter templates', false, {help_text: "Narrow down your selection by filtering templates", :body_options => {:id => 'filter_repository_templates'}}) do %>
+                    <%= folding_panel("Filter #{i18n_templates}", false, {help_text: "Narrow down your selection by filtering #{i18n_templates}", :body_options => {:id => 'filter_repository_templates'}}) do %>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-lg-2">
                             <div class="form-group">
@@ -67,7 +69,7 @@
                     </div>
                 <% end %>
 
-                <h4>Choose a template</h4>
+                <h4>Choose a <%i18n_template%></h4>
 
                 <label for="source_select" style="width:100%;margin-bottom:10px;">
                     <div class="row">
@@ -164,5 +166,4 @@
     });
 
     const templates = <%= load_templates().to_json.html_safe %>
-    console.log(templates)
 </script>
