@@ -39,6 +39,7 @@ en:
 
   sample: "Sample"
   sample_type: "Sample type"
+  template: "Template"
   templates:
     template: "Template"
     about_template: "Templates can be defined manually through the form below or based on repository templates."
