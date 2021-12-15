@@ -36,6 +36,7 @@ SEEK::Application.routes.draw do
         get :view_content
         get :get_pdf
         get :download
+        delete :destroy
       end
     end
   end
@@ -139,6 +140,7 @@ SEEK::Application.routes.draw do
       get :registration_form
       get :edit_tag      
       post :update_home_settings
+      post :delete_carousel_form
       post :restart_server
       post :restart_delayed_job
       post :update_admins
@@ -573,7 +575,7 @@ SEEK::Application.routes.draw do
     concerns :has_dashboard, controller: :programme_stats
   end
 
-  resources :publications, concerns: [:asset] do
+  resources :publications, concerns: [:asset, :has_content_blobs] do
     collection do
       get :query_authors
       get :query_authors_typeahead
@@ -582,9 +584,15 @@ SEEK::Application.routes.draw do
       post :update_metadata
     end
     member do
+      get :manage
+      get :download
+      get :upload_fulltext
+      get :soft_delete_fulltext
+      post :update_annotations_ajax
       post :disassociate_authors
       post :update_metadata
       post :request_contact
+      post :upload_pdf
     end
     resources :people, :programmes, :projects, :investigations, :assays, :studies, :models, :data_files, :documents, :presentations, :organisms, :events, :collections, only: [:index]
   end
@@ -651,6 +659,9 @@ SEEK::Application.routes.draw do
     collection do
       get :attribute_form
       get :filter
+      post :batch_create
+      put :batch_update
+      delete :batch_delete
     end
     resources :people, :programmes, :projects, :assays, :studies, :investigations, :data_files, :publications, :samples,
               :strains, :organisms, :collections, only: [:index]
@@ -787,4 +798,6 @@ SEEK::Application.routes.draw do
   get '/citation/(*doi)' => 'citations#fetch', as: :citation, constraints: { doi: /.+/ }
 
   get '/home/isa_colours' => 'homes#isa_colours'
+
+  post '/previews/markdown' => 'previews#markdown'
 end

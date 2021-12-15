@@ -889,6 +889,85 @@ class WorkflowsControllerTest < ActionController::TestCase
     assert_equal g.id, assigns(:workflow).workflow_class_id
   end
 
+  test '404 response code for show and ro-crate if workflow not found' do
+    id = 999
+    assert_nil Workflow.find_by_id(id)
+
+    get :show, params: {id: id}
+    assert_response :not_found
+
+    get :ro_crate, params: {id: id}
+    assert_response :not_found
+  end
+
+  test 'json response code for missing version' do
+    user = Factory(:user)
+    workflow = Factory(:cwl_workflow, contributor: user.person)
+    login_as(user)
+
+    version = 999
+    assert_nil workflow.find_version(999)
+
+    get :show, params: {id: workflow.id, version: version}, format: :json
+    assert_response :not_found
+
+    get :ro_crate, params: {id: workflow.id, version: version}, format: :json
+    assert_response :not_found
+
+    workflow = Factory(:cwl_workflow, contributor: Factory(:person))
+    refute workflow.can_view?
+
+    get :show, params: {id: workflow.id, version: version}, format: :json
+    assert_response :forbidden
+
+    get :ro_crate, params: {id: workflow.id, version: version}, format: :json
+    assert_response :forbidden
+
+  end
+
+  test 'should update workflow edam annotations ' do
+    Factory(:edam_topics_controlled_vocab)
+    Factory(:edam_operations_controlled_vocab)
+
+    user = Factory(:user)
+    workflow = Factory(:cwl_workflow, contributor: user.person)
+    login_as(user)
+    assert workflow.can_manage?
+
+    assert_equal 'Common Workflow Language', workflow.workflow_class_title
+
+    put :update, params: { id: workflow.id, workflow: { edam_topics: 'Chemistry, Sample collections',edam_operations:'Clustering, Expression correlation analysis' } }
+
+    assert_equal ['http://edamontology.org/topic_3314','http://edamontology.org/topic_3277'], assigns(:workflow).edam_topics
+    assert_equal ['http://edamontology.org/operation_3432','http://edamontology.org/operation_3463'], assigns(:workflow).edam_operations
+
+  end
+
+  test 'show edam annotations if set' do
+    Factory(:edam_topics_controlled_vocab)
+    Factory(:edam_operations_controlled_vocab)
+
+    user = Factory(:user)
+    workflow = Factory(:cwl_workflow, contributor: user.person)
+    login_as(user)
+
+    get :show, params: {id: workflow.id}
+    assert_response :success
+    assert_select 'div.panel div.panel-heading',text:/EDAM Properties/i, count:0
+
+    workflow.edam_topics = "Chemistry"
+    workflow.save!
+
+    assert workflow.edam_annotations?
+
+    get :show, params: {id: workflow.id}
+    assert_response :success
+
+    assert_select 'div.panel div.panel-heading',text:/EDAM Properties/i, count:1
+    assert_select 'div.panel div.panel-body div strong',text:/Topics/, count:1
+    assert_select 'div.panel div.panel-body a[href=?]','https://edamontology.github.io/edam-browser/#topic_3314',text:/Chemistry/, count:1
+  end
+
   def edit_max_object(workflow)
     add_tags_to_test_object(workflow)
     add_creator_to_test_object(workflow)
