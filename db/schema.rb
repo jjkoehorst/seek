@@ -1634,8 +1634,8 @@ ActiveRecord::Schema.define(version: 2021_12_09_112856) do
     t.string "ols_root_term_uri"
     t.boolean "required"
     t.string "short_name"
-    t.integer "template_id"
     t.string "key"
+    t.integer "template_id"
   end
 
   create_table "sample_resource_links", id: :integer,  force: :cascade do |t|
@@ -2089,7 +2089,7 @@ ActiveRecord::Schema.define(version: 2021_12_09_112856) do
     t.index ["user_id", "can_view"], name: "index_w_auth_lookup_on_user_id_and_can_view"
   end
 
-  create_table "workflow_classes",  force: :cascade do |t|
+  create_table "workflow_classes", id: :integer,  force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "key"
