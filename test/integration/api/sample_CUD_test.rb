@@ -126,6 +126,46 @@ class SampleCUDTest < ActionDispatch::IntegrationTest
     assert_equal 12, sample.get_attribute_value("age")
   end
 
+  test 'batch create with assay association' do 
+    person_1 = Factory(:person)
+    user_login(person_1)
+    project = Factory(:project)
+    institution = Factory(:institution)
+    person_1.add_to_project_and_institution(project, institution)
+    investigation = Factory(:investigation, contributor: person_1)
+    study = Factory(:study, contributor: person_1)
+    type = Factory(:patient_sample_type, contributor: person_1)
+    assay = Factory(:assay, contributor: person_1, sample_type: type)
+
+    person_2 = Factory(:person)
+    user_login(person_2)
+    person_2.add_to_project_and_institution(project, institution)
+    params = {
+      "data": [
+        {
+          "ex_id": "1",
+          "data": {
+            "type": "samples",
+            "attributes": {
+              "title": "Jack Frost",
+              "attribute_map": {"full name": "Jack Frost","weight": 12.4,"age": 12}
+            },
+            "relationships": {
+              "projects": {"data":[{"type": "projects","id": "#{project.id}"}]},
+              "sample_type": {"data": {"id": "#{type.id}","type": "sample_types"}},
+              "assays":{"data": [{"type": "assays","id": "#{assay.id}"}]}
+            }
+          }
+        }
+      ]
+    }
+
+    assert_difference('AssayAsset.count', 1) do
+      post "/samples/batch_create", as: :json, params: params
+      assert_response :success
+    end
+  end
+
   def create_post_values
       @post_values = {
          sample_type_id: @sample_type.id,
