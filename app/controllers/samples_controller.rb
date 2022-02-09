@@ -136,7 +136,7 @@ class SamplesController < ApplicationController
         params = param_converter.convert(par)
         sample = Sample.new(sample_type_id: params[:sample][:sample_type_id], title: params[:sample][:title])
         update_sample_with_params(params, sample)
-        if sample.save
+        if sample.save.tap { |x| puts "Create was: #{x.class} #{x}" }
           results.push({ ex_id: par[:ex_id], id: sample.id })
         elsif
           errors.push({ ex_id: par[:ex_id], error: sample.errors.messages })
@@ -204,14 +204,14 @@ class SamplesController < ApplicationController
     if parameters[:sample][:attribute_map]
       parameters[:sample][:data] = parameters[:sample].delete(:attribute_map)
     end
-    # if (parameters[:sample][:assay_assets_attributes])
-    #   parameters[:sample][:assay_ids] = parameters[:sample][:assay_assets_attributes].map { |x| x[:assay_id] }
-    # end
+    if (parameters[:sample][:assay_assets_attributes])
+      parameters[:sample][:assay_ids] = parameters[:sample][:assay_assets_attributes].map { |x| x[:assay_id] }
+    end
     parameters.require(:sample).permit(:sample_type_id, *creator_related_params,
-                              { project_ids: [] }, { data: sample_type_param_keys },
-                              { assay_assets_attributes: [:assay_id] },
-                              { special_auth_codes_attributes: [:code, :expiration_date, :id, :_destroy] },
-                              discussion_links_attributes:[:id, :url, :label, :_destroy])
+                                       { project_ids: [] }, { data: sample_type_param_keys },
+                                       { assay_ids: [] },
+                                       { special_auth_codes_attributes: [:code, :expiration_date, :id, :_destroy] },
+                                       discussion_links_attributes:[:id, :url, :label, :_destroy])
   end
 
   def update_sample_with_params(parameters = params, sample = @sample)
