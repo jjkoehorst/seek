@@ -138,6 +138,7 @@ class SampleCUDTest < ActionDispatch::IntegrationTest
     assay = Factory(:assay, contributor: person_1, sample_type: type)
 
     person_2 = Factory(:person)
+    assay.policy.permissions.create!(access_type: Policy::EDITING, contributor: person_2)
     user_login(person_2)
     person_2.add_to_project_and_institution(project, institution)
     params = {
