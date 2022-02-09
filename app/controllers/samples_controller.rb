@@ -138,13 +138,14 @@ class SamplesController < ApplicationController
         update_sample_with_params(params, sample)
         if sample.save.tap { |x| puts "Create was: #{x.class} #{x}" }
           results.push({ ex_id: par[:ex_id], id: sample.id })
-        elsif
+        else
           errors.push({ ex_id: par[:ex_id], error: sample.errors.messages })
         end
       end
-      raise ActiveRecord::Rollback if !errors.empty?
+      raise ActiveRecord::Rollback if errors.any?
     end
-    render json: { status: errors.empty? ? :ok : :unprocessable_entity, errors: errors, results: results }
+    status = errors.empty? ? :ok : :unprocessable_entity
+    render json: { status: status, errors: errors, results: results }, status: status
   end
 
   def batch_update
