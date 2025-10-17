@@ -7,12 +7,13 @@ workgroup = WorkGroup.where(project_id: project.id, institution_id: institution.
 # Create a strain
 strain = Strain.where(title: 'Sulfolobus solfataricus strain 98/2').first_or_create
 strain.projects = [project]
-strain.policy = Policy.create(name: 'default policy', access_type: 1)
+strain.policy = Policy.create(name: 'publicly downloadable policy', sharing_scope: Policy::EVERYONE, access_type: Policy::ACCESSIBLE)
 strain.organism = Organism.where(title: 'Sulfolobus solfataricus').first_or_create
 strain.provider_name = 'BacDive'
 strain.provider_id = '123456789'
 strain.synonym = '98/2'
 strain.comment = 'This is a test strain.'
+# Note: contributor and tags will be added in example_users_seeds.rb after users are created
 strain.save!
 puts 'Seeded 1 strain.'
 
@@ -20,6 +21,7 @@ puts 'Seeded 1 strain.'
 organism = Organism.where(title: 'Sulfolobus solfataricus').first_or_create
 organism.projects = [project]
 organism.strains = [strain]
+organism.concept_uri = '2287'  # Will be converted to http://purl.bioontology.org/ontology/NCBITAXON/2287
 organism.save!
 puts 'Seeded 1 organism.'
 

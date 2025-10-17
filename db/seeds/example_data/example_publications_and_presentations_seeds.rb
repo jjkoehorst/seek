@@ -16,8 +16,12 @@ publication = Publication.new(
 
 # Set contributor and projects
 publication.contributor = $guest_person
+publication.creators = [$admin_person]
 publication.projects << $project
-
+publication.annotate_with(['metabolism', 'thermophile', 'gluconeogenesis'], 'tag', $guest_person)
+# License
+publication.license = 'CC-BY-4.0'
+publication.registered_mode = Publication::REGISTRATION_MANUALLY
 # Build policy through the association
 publication.build_policy(name: 'default policy', access_type: 1)
 # Publication date
@@ -45,8 +49,6 @@ disable_authorization_checks do
   publication.associate($model_assay)
 end
 
-# Create asset
-AssetsCreator.create(asset_id: publication.id, creator_id: $guest_person.id, asset_type: publication.class.name)
 puts 'Seeded 1 publication.'
 
 # Presentation
@@ -58,20 +60,24 @@ presentation = Presentation.new(
 )
 presentation.projects = [$project]
 presentation.contributor = $guest_person
-presentation.policy = Policy.create(name: 'default policy', access_type: 1)
+presentation.creators = [$guest_person]
+presentation.license = 'CC-BY-4.0'
+presentation.policy = Policy.create(name: 'publicly downloadable policy', sharing_scope: Policy::EVERYONE, access_type: Policy::ACCESSIBLE)
+presentation.annotate_with(['example', 'presentation'], 'tag', $guest_person)
 presentation.content_blob = ContentBlob.new(original_filename: 'presentation.pptx', content_type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation')
-AssetsCreator.create(asset_id: presentation.id, creator_id: $guest_person.id, asset_type: presentation.class.name)
-FileUtils.cp File.dirname(__FILE__) + '/' + presentation.content_blob.original_filename, presentation.content_blob.filepath # TODO results in "This version is not available"
-presentation.version = 1
-presentation.save!
+disable_authorization_checks do
+  presentation.save!
+  FileUtils.cp File.dirname(__FILE__) + '/' + presentation.content_blob.original_filename, presentation.content_blob.filepath
+  presentation.content_blob.save!
+end
 puts 'Seeded 1 presentation.'
 
 # Create an event
 event = Event.new(title: 'Event for publication', description: 'Event for publication', start_date: Date.today, end_date: Date.today + 1.day)
 event.projects = [$project]
 event.contributor = $guest_person
-event.policy = Policy.create(name: 'default policy', access_type: 1)
-# event.website = 'http://www.seek4science.org'
+event.policy = Policy.create(name: 'default policy', sharing_scope: Policy::EVERYONE, access_type: Policy::ACCESSIBLE)
+event.url = 'http://www.seek4science.org'
 event.city = 'London'
 event.country = 'United Kingdom'
 event.address = 'Dunmore Terrace 123'

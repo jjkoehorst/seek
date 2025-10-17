@@ -36,6 +36,7 @@ disable_authorization_checks do
   $project.web_page = 'http://www.seek4science.org'
   $project.pals = [guest_person]
   $project.save!
+  $project.annotate_with(['thermophile', 'glycolysis', 'systems biology'], 'tag', guest_person)
   puts 'Seeded 1 project.'
 end
 
@@ -44,12 +45,20 @@ disable_authorization_checks do
   $institution.country = 'United Kingdom'
   $institution.city = 'Manchester' # Overridden by ROR
   $institution.web_page = 'http://www.seek4science.org' # Overridden by ROR
-  # $institution.ror_id = '027m9bs27' # Only works with active internet connection
+  $institution.ror_id = '027m9bs27' # University of Manchester
   $institution.address = '10 Downing Street' # Stays the same
   $institution.department = 'Department of SEEK for Science'
   # Logo?
   $institution.save!
   puts 'Seeded 1 institution.'
+end
+
+# Update strain with contributor and tags
+disable_authorization_checks do
+  $strain.contributor = guest_person
+  $strain.annotate_with(['thermophile', 'archaea', 'strain'], 'tag', guest_person)
+  $strain.save!
+  puts 'Updated strain with contributor and tags.'
 end
 
 # Store references for other seed files

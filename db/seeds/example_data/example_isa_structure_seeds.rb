@@ -3,13 +3,17 @@ investigation = Investigation.new(title: 'Central Carbon Metabolism of Sulfolobu
                                   description: 'An investigation in the CCM of S. solfataricus with a focus on the unique temperature adaptations and regulation; using a combined modelling and experimental approach.')
 investigation.projects = [$project]
 investigation.contributor = $guest_person
+investigation.creators = [$admin_person]
 investigation.policy = Policy.create(name: 'default policy', access_type: 1)
 investigation.annotate_with(['metabolism', 'thermophile'], 'tag', $guest_person)
 investigation.save
 puts 'Seeded 1 investigation.'
 
 study = Study.new(title: 'Carbon loss at high T')
+study.description = 'Study of carbon loss in the gluconeogenic direction at high temperatures in S. solfataricus.'
 study.contributor = $guest_person
+study.creators = [$admin_person]
+study.other_creators = [$admin_person.name, 'Jane Doe']
 study.policy = Policy.create(name: 'default policy', access_type: 1)
 study.investigation = investigation
 study.annotate_with(['thermophile', 'high temperature'], 'tag', $guest_person)
@@ -19,6 +23,7 @@ puts 'Seeded 1 study.'
 ## Observation unit
 observation_unit = ObservationUnit.new(title: 'Large scale bioreactor')
 observation_unit.description = 'A large scale bioreactor with a 1000 mL reservoir.'
+observation_unit.creators = [$admin_person]
 observation_unit.other_creators = [$admin_person.name, 'Jane Doe']
 observation_unit.contributor = $guest_person
 observation_unit.policy = Policy.create(name: 'default policy', access_type: 1)
@@ -33,8 +38,10 @@ puts 'Seeded 1 observation unit'
 exp_assay = Assay.new(title: 'Reconstituted system reference state',
                       description: 'The four purified enzymes were incubated in assay buffer and consumption of 3PG and production of F6P were measured in time, together with GAP and DHAP concentrations.')
 exp_assay.contributor = $guest_person
+exp_assay.creators = [$admin_person, $guest_person]
 exp_assay.policy = Policy.create(name: 'default policy', access_type: 1)
 exp_assay.study = study
+exp_assay.annotate_with(['metabolism', 'thermophile'], 'tag', $guest_person)
 # exp_assay.observation_units = [observation_unit] # TODO ActiveRecord::HasManyThroughNestedAssociationsAreReadonly: Cannot modify association 'Assay#observation_units' because it goes through more than one other association. (ActiveRecord::HasManyThroughNestedAssociationsAreReadonly)
 exp_assay.assay_class = AssayClass.experimental
 exp_assay.organisms = [$organism]
@@ -45,8 +52,12 @@ puts "exp_assay: Seeded 1 #{exp_assay.assay_class.long_key.downcase}."
 model_assay = Assay.new(title: 'Model reconstituted system',
                         description: 'Mathematical model for the reconstituted system with PGK, GAPDH, TPI and FBPAase.')
 model_assay.contributor = $guest_person
+model_assay.creators = [$admin_person]
+model_assay.annotate_with(['modeling', 'metabolism'], 'tag', $guest_person)
 model_assay.policy = Policy.create(name: 'default policy', access_type: 1)
 model_assay.study = study
+model_assay.organisms = [$organism]
+# model_assay.license = 'CC-BY-4.0' # TODO add license to assay?
 model_assay.assay_class = AssayClass.modelling
 model_assay.save
 puts "Seeded 1 #{model_assay.assay_class.long_key.downcase}."
@@ -55,6 +66,8 @@ puts "Seeded 1 #{model_assay.assay_class.long_key.downcase}."
 assay_stream = Assay.new(title: 'Assay stream',
                          description: 'A stream of assays? This is a test assay stream for the example data.',)
 assay_stream.contributor = $guest_person
+assay_stream.creators = [$guest_person]
+assay_stream.annotate_with(['assay stream'], 'tag', $guest_person)
 assay_stream.policy = Policy.create(name: 'default policy', access_type: 1)
 assay_stream.study = study
 assay_stream.assay_class = AssayClass.assay_stream
