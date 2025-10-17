@@ -85,6 +85,22 @@ event.address = 'Dunmore Terrace 123'
 event.save!
 puts 'Seeded 1 event.'
 
+# Create a document
+document = Document.new(title: 'Document for publication', description: 'Document for publication')
+document.projects = [$project]
+document.creators = [$admin_person]
+document.contributor = $guest_person
+document.license = 'CC-BY-4.0'
+document.annotate_with(['example', 'document'], 'tag', $guest_person)
+document.policy = Policy.create(name: 'default policy', sharing_scope: Policy::EVERYONE, access_type: Policy::ACCESSIBLE)
+document.content_blob = ContentBlob.new(original_filename: 'Document.pdf', content_type: 'application/pdf')
+disable_authorization_checks do
+  document.save!
+  FileUtils.cp File.dirname(__FILE__) + '/' + document.content_blob.original_filename, document.content_blob.filepath
+  document.content_blob.save!
+end
+puts 'Seeded 1 document.'
+
 # Store references for other seed files
 $publication = publication
 $presentation = presentation
