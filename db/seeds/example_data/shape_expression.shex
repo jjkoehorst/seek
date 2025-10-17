@@ -1,0 +1,348 @@
+PREFIX : <http://weso.es/shapes/>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX csvw: <http://www.w3.org/ns/csvw#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dcmitype: <http://purl.org/dc/dcmitype/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dcam: <http://purl.org/dc/dcam/>
+PREFIX doap: <http://usefulinc.com/ns/doap#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX prof: <http://www.w3.org/ns/dx/prof/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX schema: <https://schema.org/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX ssn: <http://www.w3.org/ns/ssn/>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX vann: <http://purl.org/vocab/vann/>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace/>
+PREFIX virtrdf: <http://www.openlinksw.com/schemas/virtrdf#>
+PREFIX rdfdf: <http://www.openlinksw.com/virtrdf-data-formats#>
+PREFIX bif: <http://www.openlinksw.com/schemas/bif#>
+PREFIX ns8: <http://www.openlinksw.com/schemas/DAV#>
+PREFIX ns9: <http://www.w3.org/2002/07/>
+PREFIX ns10: <http://www.w3.org/2000/01/>
+PREFIX ldp: <http://www.w3.org/ns/ldp#>
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX ns13: <http://localhost:8890/sparql#>
+PREFIX sd: <http://www.w3.org/ns/sparql-service-description#>
+PREFIX ns15: <http://localhost:8890/>
+PREFIX formats: <http://www.w3.org/ns/formats/>
+PREFIX ns17: <http://jermontology.org/ontology/JERMOntology#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX ns20: <http://purl.org/ppeo/PPEO.owl#>
+PREFIX ns21: <http://purl.uniprot.org/core/>
+
+
+:Person
+{
+   rdf:type  [ns17:Person]  ;                                  # 100.0 %
+   ns17:isCreatorOf  @:Data  +;                                # 100.0 %
+            # 50.0 % obj: @:Data. Cardinality: {1}
+            # 50.0 % obj: @:Data. Cardinality: {2}
+            # 100.0 % obj: @:SOP. Cardinality: {1}
+            # 100.0 % obj: @:Experimental_assay. Cardinality: {1}
+            # 50.0 % obj: @:Modelling_analysis. Cardinality: {1}
+            # 50.0 % obj: @:Model. Cardinality: {1}
+            # 50.0 % obj: @:observation_unit. Cardinality: {1}
+            # 50.0 % obj: @:Study. Cardinality: {1}
+            # 50.0 % obj: @:Investigation. Cardinality: {1}
+            # 50.0 % obj: @:Sample. Cardinality: {6}
+   ns17:isAssociatedWith  @:Project  ;                         # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns17:seekID  xsd:anyURI  ;                                  # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   foaf:name  xsd:string  ;                                    # 100.0 %
+   ns17:description  xsd:string  ;                             # 100.0 %
+   foaf:familyName  xsd:string  ;                              # 100.0 %
+   foaf:mbox_sha1sum  xsd:string  ;                            # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   foaf:firstName  xsd:string  ;                               # 100.0 %
+   sioc:name  xsd:string  ;                                    # 100.0 %
+   ns17:isContributorOf  @:Data  *
+            # 50.0 % obj: @:Data. Cardinality: {2}
+            # 50.0 % obj: @:Sample. Cardinality: {6}
+            # 50.0 % obj: @:Modelling_analysis. Cardinality: {1}
+            # 50.0 % obj: @:Model. Cardinality: {1}
+            # 50.0 % obj: @:observation_unit. Cardinality: {1}
+            # 50.0 % obj: @:Strain. Cardinality: {1}
+            # 50.0 % obj: @:Publication. Cardinality: {1}
+            # 50.0 % obj: @:Study. Cardinality: {1}
+            # 50.0 % obj: @:Experimental_assay. Cardinality: {1}
+            # 50.0 % obj: @:Investigation. Cardinality: {1}
+            # 50.0 % obj: @:SOP. Cardinality: {1}
+}
+
+
+:Organism
+{
+   rdf:type  [ns17:Organism]  ;                                # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns17:isInvestigatedBy  @:Modelling_analysis  ;              # 100.0 %
+            # 100.0 % obj: @:Experimental_assay. Cardinality: {1}
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   ns17:NCBI_ID  xsd:anyURI                                    # 100.0 %
+}
+
+
+:Study
+{
+   ns17:hasPart  @:Modelling_analysis  ;                       # 100.0 %
+            # 100.0 % obj: @:observation_unit. Cardinality: {1}
+            # 100.0 % obj: @:Experimental_assay. Cardinality: {1}
+   rdf:type  [ns17:Study]  ;                                   # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   ns17:isPartOf  @:Investigation  ;                           # 100.0 %
+   ns17:seekID  xsd:anyURI  ;                                  # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   sioc:has_owner__or__sioc_has_creator__or__ns17_hasCreator__or__ns17_hasContributor  @:Person  ;                                 # 100.0 %
+   ns17:description  xsd:string  ;                             # 100.0 %
+}
+
+
+
+:Publication
+{
+   ns17:description  xsd:string  ;                             # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   rdf:type  [ns17:Publication]  ;                             # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   ns17:isPartOf  @:Modelling_analysis  ;                      # 100.0 %
+            # 100.0 % obj: @:Experimental_assay. Cardinality: {1}
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   sioc:has_owner__or__ns17_hasContributor  @:Person                                    # 100.0 %
+}
+
+
+:Project
+{
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   foaf:homepage  xsd:anyURI  ;                                # 100.0 %
+   ns17:hasItem  @:SOP  ;                                      # 100.0 %
+            # 100.0 % obj: @:Modelling_analysis. Cardinality: {1}
+            # 100.0 % obj: @:Publication. Cardinality: {1}
+            # 100.0 % obj: @:Data. Cardinality: {2}
+            # 100.0 % obj: @:Model. Cardinality: {1}
+            # 100.0 % obj: @:Study. Cardinality: {1}
+            # 100.0 % obj: @:Experimental_assay. Cardinality: {1}
+            # 100.0 % obj: @:Investigation. Cardinality: {1}
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   rdf:type  [ns17:Project]  ;                                 # 100.0 %
+   ns17:isAssociatedWith  @:Person  {2};                       # 100.0 %
+   ns17:description  xsd:string  ;                             # 100.0 %
+   ns17:webLink  xsd:anyURI  ;                                 # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   ns17:isPartOf  @:Programme  ;                               # 100.0 %
+   ns17:investigates  @:Organism  ;                            # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   ns17:seekID  xsd:anyURI                                     # 100.0 %
+}
+
+
+
+:Sample
+{
+   rdf:type  [ns17:Sample]  ;                                  # 100.0 %
+   sioc:has_creator__or__ns17_hasCreator__or__sioc_has_owner__or__ns17_hasContributor  @:Person  ;                               # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   ns17:hasPart  @:Experimental_assay  ;                       # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns21:enzyme  xsd:string  ?
+            # 66.66666666666666 % obj: xsd:string. Cardinality: {1}
+}
+
+
+:Service
+{
+   sd:feature  IRI  {2};                                       # 100.0 %
+   sd:resultFormat  IRI  {8};                                  # 100.0 %
+   rdf:type  [sd:Service]  ;                                   # 100.0 %
+   sd:url  IRI  ;                                              # 100.0 %
+   sd:supportedLanguage  IRI  ;                                # 100.0 %
+   sd:endpoint  IRI                                            # 100.0 %
+}
+
+
+:Strain
+{
+   ns17:externalSupplierID  xsd:string  ;                      # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   rdf:type  [ns17:Strain]  ;                                  # 100.0 %
+   ns17:description  xsd:string  ;                             # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   ns17:NCBI_ID  xsd:anyURI  ;                                 # 100.0 %
+   ns17:hasContributor__or__sioc_has_owner  @:Person                # 100.0 %
+}
+
+
+:Investigation
+{
+   ns17:description  xsd:string  ;                             # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns17:seekID  xsd:anyURI  ;                                  # 100.0 %
+   sioc:has_creator__or__ns17_hasCreator__or__ns17_hasContributor__or__sioc_has_owner  @:Person  ;                               # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   rdf:type  [ns17:Investigation]  ;                           # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   ns17:hasPart  @:Study  ;                                    # 100.0 %
+   ns17:title  xsd:string                                      # 100.0 %
+}
+
+
+:Data
+{
+   ns17:description  xsd:string  ;                             # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+sioc:has_creator__or__ns17_hasContributor__or__sioc_has_owner__or__ns17_hasCreator  @:Person  ;                              # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   ns17:isPartOf  @:Experimental_assay  ;                      # 100.0 %
+            # 100.0 % obj: @:Modelling_analysis. Cardinality: {1}
+   rdf:type  [ns17:Data]  ;                                    # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   ns17:seekID  xsd:anyURI                                     # 100.0 %
+}
+
+
+:Model
+{
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   ns17:isPartOf  @:Modelling_analysis  ;                      # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   ns17:hasCreator__or__sioc_has_owner__or__ns17_hasContributor__or__sioc_has_creator  @:Person  ;                                # 100.0 %
+   ns17:hasFormat  IRI  ;                                      # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   rdf:type  [ns17:Model]  ;                                   # 100.0 %
+   ns17:seekID  xsd:anyURI  ;                                  # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns17:description  xsd:string                                # 100.0 %
+}
+
+
+:SOP
+{
+   ns17:isPartOf  @:Modelling_analysis  ;                      # 100.0 %
+            # 100.0 % obj: @:Experimental_assay. Cardinality: {1}
+   ns17:description  xsd:string  ;                             # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   ns17:seekID  xsd:anyURI  ;                                  # 100.0 %
+   rdf:type  [ns17:SOP]  ;                                     # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   sioc:has_creator__or__ns17_hasContributor__or__ns17_hasCreator__or__sioc_has_owner  @:Person  {2};                            # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   dcterms:modified  xsd:dateTime                              # 100.0 %
+}
+
+
+:observation_unit
+{
+ns17:hasContributor__or__ns17_hasCreator__or__sioc_has_creator__or__sioc_has_owner  @:Person  ;                            # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   ns17:description  xsd:string  ;                             # 100.0 %
+   ns17:isPartOf  @:Study  ;                                   # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   rdf:type  [ns20:observation_unit]  ;                        # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   dcterms:created  xsd:dateTime                               # 100.0 %
+}
+
+
+:Programme
+{
+   ns17:investigates  @:Organism  ;                            # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   ns17:seekID  xsd:anyURI  ;                                  # 100.0 %
+   ns17:isAssociatedWith  @:Person  {2};                       # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   ns17:description  xsd:string  ;                             # 100.0 %
+   rdf:type  [ns17:Programme]  ;                               # 100.0 %
+   ns17:hasPart  @:Project  ;                                  # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   dcterms:title  xsd:string                                   # 100.0 %
+}
+
+
+:Experimental_assay
+{
+   ns17:hasPart  @:Sample  {6};                                # 100.0 %
+            # 100.0 % obj: @:Publication. Cardinality: {1}
+            # 100.0 % obj: @:Data. Cardinality: {2}
+            # 100.0 % obj: @:SOP. Cardinality: {1}
+   sioc:has_creator__or__ns17_hasContributor__or__ns17_hasCreator__or__sioc_has_owner  @:Person  {2};                            # 100.0 %
+   ns17:description  xsd:string  ;                             # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   ns17:hasType  IRI  {2};                                     # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   ns17:seekID  xsd:anyURI  ;                                  # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   ns17:isPartOf  @:Study  ;                                   # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns17:investigates  @:Organism  ;                            # 100.0 %
+   rdf:type  [ns17:Experimental_assay]                         # 100.0 %
+}
+
+
+:Modelling_analysis
+{
+   ns17:hasPart  @:Data  {2};                                  # 100.0 %
+            # 100.0 % obj: @:SOP. Cardinality: {1}
+            # 100.0 % obj: @:Model. Cardinality: {1}
+            # 100.0 % obj: @:Publication. Cardinality: {1}
+   ns17:hasContributor__or__ns17_hasCreator__or__sioc_has_owner__or__sioc_has_creator  @:Person  ;                            # 100.0 %
+   dcterms:description  xsd:string  ;                          # 100.0 %
+   ns17:title  xsd:string  ;                                   # 100.0 %
+   ns17:itemProducedBy  @:Project  ;                           # 100.0 %
+   ns17:isValidatedBy  @:Data  {2};                            # 100.0 %
+   ns17:isPartOf  @:Study  ;                                   # 100.0 %
+   dcterms:title  xsd:string  ;                                # 100.0 %
+   ns17:hasType  IRI  ;                                        # 100.0 %
+   dcterms:created  xsd:dateTime  ;                            # 100.0 %
+   dcterms:modified  xsd:dateTime  ;                           # 100.0 %
+   ns17:investigates  @:Organism  ;                            # 100.0 %
+   ns17:description  xsd:string  ;                             # 100.0 %
+   rdf:type  [ns17:Modelling_analysis]  ;                      # 100.0 %
+   ns17:seekID  xsd:anyURI                                     # 100.0 %
+}
+
