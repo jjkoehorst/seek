@@ -36,7 +36,7 @@ Seek::Config.exception_notification_recipients = ['errors@fair-dom.org']
 Seek::Config.datacite_url = 'https://mds.test.datacite.org/'
 Seek::Config.doi_prefix = '10.5072'
 Seek::Config.doi_suffix = 'seek.5'
-Seek::Config.tag_threshold = 0 # TODO set to 0 or 1 so the tags created in this example_data seeds will be visiblw on the front page.
+Seek::Config.tag_threshold = 0 # TODO set to 0 or 1 so the tags created in this example_data seeds will be visible on the front page.
 puts 'Finish configuration'
 puts 'Please visit admin site for further configuration, e.g. site_base_host, pubmed_api_email, crossref_api_email, bioportal_api_key, email, doi, admin email'
 puts 'Admin account: username admin, password adminadmin. You might want to change admin password.'
