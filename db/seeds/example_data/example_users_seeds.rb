@@ -8,13 +8,16 @@ admin_user = User.where(login: 'admin').first_or_create(
 )
 
 admin_user.activate
-# TODO, check if admin really has access to the admin environment
 admin_user.build_person(first_name: 'Admin', last_name: 'User', email: 'admin@test1000.com') unless admin_user.person
 admin_user.save!
 admin_user.person.work_groups << $workgroup
 admin_person = admin_user.person
-admin_person.save
-puts 'Seeded 1 admin.'
+# Set admin rights
+disable_authorization_checks do
+  admin_person.is_admin = true
+  admin_person.save!
+end
+puts 'Seeded 1 admin with full admin rights.'
 
 ## Guest
 guest_user = User.where(login: 'guest').first_or_create(
